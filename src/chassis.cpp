@@ -49,3 +49,7 @@ void Chassis::initalize(){
     pinMode(taskSwitches[i], INPUT_PULLUP);
   }
 }
+
+double Chassis::getEncoderData(){
+  return Motor_Encoder.read();
+}

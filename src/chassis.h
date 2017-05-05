@@ -10,6 +10,7 @@ public:
   virtual ~Chassis();
 
   void initalize;
+  double getEncoderData;
   int choseTask;
 private:
   //Motor Controller for both Left and Right
