@@ -13,7 +13,7 @@ void setup(){
 void loop(){
   switch (task) {
     case 1:
-      
+
       break;
     case 2:
 
