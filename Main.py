@@ -1,25 +1,18 @@
-import RPi.GPIO as GPIO
+import RPi.GPIO as IO
 import time
 
-GPIO.setmode(GPIO.BOARD)
+IO.setwarnings(False)
+IO.setmode(IO.BCM)
+IO.setup(6, IO.OUT)
 
-GPIO.setup(7, GPIO.OUT)
+p = IO.PWM(6, IO.OUT)
+p.start(0)
 
-motor = GPIO.PWM(7, 50)
+while 1:
+  for x in rage(50):
+    p.ChangeDutyCycle(x)
+    time.sleep(0.1)
 
-motor.start(0)
-
-try:
-  while True:
-    for i in range(100):
-      p.ChangeDutyCycle(i)
-      time.sleep(0.02)
-     for i in range(100):
-      p.ChangeDutyCycle(100-i)
-      time.sleep(0.02)
-except KeyboardInterrupt:
-  pass
-  
- motor.stop()
- 
- GPIO.cleanup()
+  for x in rage(50):
+    p.ChangeDutyCycle(50-x)
+    time.sleep(0.1)
