@@ -5,8 +5,8 @@ This repository is for the Kalamzoo public high schools autonomous. Every year w
 #### Installation
 For Installation you will need a few seperate projects. Each of them are maintained seperately from the project. But for this year project well be using
 
-[Navis]()
-[Vision]()
+- [Navis](https://github.com/winters-brown/Navis)
+- [Vision](https://github.com/winters-brown/Vision)
 
 Each of these repositorys go over how to install them and so forth on the intended operating system.
 
