@@ -23,10 +23,10 @@ git push origin Branch_Name
 ```
 
 #### Credits
-    - Joshua Winters-Brown
-    - Daniel Nguyen
-    - Chris Nguyen
-    - Ian
+  - Joshua Winters-Brown
+  - Daniel Nguyen
+  - Chris Nguyen
+  - Ian
 
 #### License
 MIT
