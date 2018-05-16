@@ -13,15 +13,19 @@ int drive_pin = 12;
 int encoder_left = 3;
 int encoder_right = 4;
 
+int front_sensor = A1;
+int back_sensor = A2;
+int left_sensor = A3;
+int right_sensor = A4;
+
+
 // Interface Values
 double encoder_tick;
 
 // Steering Positions
 double LEFT = 85;
 double HOME = 100;
-double RIGHT = 115;
-
-int Step = 1;
+double RIGHT = 125;
 
 // Drive Speeds
 double MIN_FORWARD = 72;
@@ -36,18 +40,28 @@ double MAX_REVERSE = 250;
 
 double ENCODER_INCH = 22.6696;
 double ENCODER_FOOT = ENCODER_INCH*12;
+double ENCODER_METER = ENCODER_INCH*39.5;
 
 boolean DEBUGGING = true;
 
-int task = 1;
+// Constants
+
+int task = 2;
 int mytask = 1;
 
 // PID
-double P = 0.008488;
+double P = 0.01888;
 double I = 0.0;
 double D = 0.0;
 float output_speed; 
 
+
+int pulse;
+
+int front_detection;
+int back_detection;
+int right_detection;
+int left_detection;
 
 Servo steering;
 Servo chassis;
@@ -59,9 +73,25 @@ void setup() {
   steering.attach(turn_pin);
   chassis.attach(drive_pin);
 
+  steering.write(HOME);
+
   enc.write(0);
+  
+  I2C.begin();
+
 
   Serial.begin(9600);
+
+//  left_sensor.setADSampleDealy(10);
+  
+  delay(1000);
+  Serial.println("1 Seconds");
+  delay(1000);
+  Serial.println("2 Seconds");
+  delay(1000);
+  Serial.println("3 Seconds");
+  delay(1000);
+  Serial.println("Starting...\n");
 }
 
 void loop() {
@@ -72,7 +102,7 @@ void loop() {
       task_one();
       break;
     case 2:
-     Serial.println("Starting Task Two");
+      task_two();
      break;
     case 3:
       Serial.println("Starting Task Three");
@@ -86,24 +116,62 @@ void loop() {
 void task_one(){
   switch(mytask){
     case 1:
-      if(encoder_tick <= ENCODER_FOOT*3.3){
-        drive(pid_manager(encoder_tick, ENCODER_FOOT*3.3));
+      if(encoder_tick <= ENCODER_METER*3){
+        drive(0.3);
       } else {
         drive(0.0);
         mytask++;
       }  
       break;
     case 2:
-      Serial.println("\nLast Given Value \n");
-      pid_manager(encoder_tick, ENCODER_FOOT*3.3);
+      Serial.println("Clearing Encoder");
+      encoder_tick = 0;
+      steering.write(RIGHT);
+      delay(2000);
+      enc.write(0);
       mytask++;
       break;
+    case 3:
+      if(encoder_tick <= ENCODER_METER*5.4){
+        drive(0.3);
+      } else {
+        steering.write(HOME);
+        drive(0.0);
+        delay(1500);
+        mytask++;
+      }
+    pid_manager(encoder_tick, ENCODER_METER*5.4);
    }
+}
+
+void task_two(){
+  Serial.println("Front [" + String(front_detection) + "]");
+  Serial.println("Front [" + String(back_detection) + "]");
+  Serial.println("Front [" + String(left_detection) + "]");
+  Serial.println("Front [" + String(right_detection) + "]");
 }
 
 void update_interface(){
   encoder_tick = enc.read();
+
+  if(DEBUGGING) Serial.println("Updating Distance Sensors"); 
+  pinMode(front_sensor, INPUT);     
+  pulse = pulseIn(front_sensor, HIGH);
+  front_detection = pulse/147;
+
+  pinMode(back_sensor, INPUT);  
+  pulse = pulseIn(back_sensor, HIGH);
+  back_detection = pulse/147;
+
+  pinMode(left_sensor, INPUT);  
+  pulse = pulseIn(left_sensor, HIGH);
+  left_detection = pulse/147;
+
+  pinMode(right_sensor, INPUT);
+  pulse = pulseIn(right_sensor, HIGH);
+  right_detection = pulse/147;
 }
+
 
 void drive(float speed){
   speed = 90*speed;
