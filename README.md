@@ -22,11 +22,8 @@ git checkout Branch_Name
 git push origin Branch_Name
 ```
 
-#### Credits 
+#### Credits
   - Joshua Winters-Brown
-  - Daniel Nguyen
-  - Chris Nguyen
-  - Ian
 
 #### License
 GNU GPLv3
