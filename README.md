@@ -10,6 +10,16 @@ For Installation you will need a few seperate projects. Each of them are maintai
 
 Each of these repositorys go over how to install them and so forth on the intended operating system.
 
+After installing those you will want to update and upgrade your system using the command
+
+```
+$ sudo apt update -y && sudo apt upgrade -y
+```
+
+You will now want to follow this (tutorial)[https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md]
+
+
+
 #### Contributing / Updating
 ```
 # Create Branch
