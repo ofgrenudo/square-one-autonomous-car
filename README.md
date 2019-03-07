@@ -16,7 +16,7 @@ After installing those you will want to update and upgrade your system using the
 $ sudo apt update -y && sudo apt upgrade -y
 ```
 
-You will now want to follow this (tutorial)[https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md]
+You will now want to follow this [tutorial](https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md)
 
 
 
