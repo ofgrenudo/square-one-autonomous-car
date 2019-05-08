@@ -10,14 +10,13 @@ Encoder enc(4, 5);
 int steering_Pin = 2;
 int driving_Pin = 3;
 
-// Tasks
-int task_one = A1; 
-int task_one = A2; 
-int task_three = A3; 
+int task_3 = A1;
+int task_2 = A2;
+int task_1 = A3;
 
 // Steering Positions
 double LEFT = 55;
-double HOME = 130;
+double HOME = 125;
 double RIGHT = 185;
 
 // DRIVING PWM
@@ -153,6 +152,10 @@ void task_two(){
   Serial.println(front_inches);
 }
 
+void command_chooser(){
+
+}
+
 void setup() {
   Serial.begin(9600);
   
@@ -165,13 +168,37 @@ void setup() {
   chassis.attach(driving_Pin);
 
   steering.write(HOME);
+
 }
 
 
 
 void loop() { 
-  read_sensor();
-  task_two();
+  update_interfaces();
+  int task_one_raw = analogRead(A3);
+  int task_two_raw = analogRead(A2);
+  int task_three_raw = analogRead(A1);
+  int start_raw = analogRead(A5);
+
+  float task_oneV = task_one_raw * (5.0 / 1023.0);
+  float task_twoV = task_two_raw * (5.0 / 1023.0);
+  float task_threeV = task_three_raw * (5.0 / 1023.0);
+  float startV = start_raw * (5.0 / 1023.0);
+
+  if(startV > 3) {
+    if (task_oneV > 3){
+      task_one();
+    }
+    if (task_twoV > 3){
+      task_two();
+    }
+    if (task_threeV > 3){
+      Serial.println("Task 3 Selected");
+    }  
+  } else {
+    drive(0.0);
+    steering.write(HOME);
+  }
 }
 
 void update_interfaces(){
