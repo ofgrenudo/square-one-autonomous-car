@@ -10,6 +10,11 @@ Encoder enc(4, 5);
 int steering_Pin = 2;
 int driving_Pin = 3;
 
+// Tasks
+int task_one = A1; 
+int task_one = A2; 
+int task_three = A3; 
+
 // Steering Positions
 double LEFT = 55;
 double HOME = 130;
