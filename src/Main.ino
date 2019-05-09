@@ -7,7 +7,7 @@ Servo steering;
 Servo chassis;
 Encoder enc(4, 5);
 
-int steering_Pin = 2;
+int steering_Pin = 1;
 int driving_Pin = 3;
 
 int task_3 = A1;
