@@ -5,10 +5,10 @@
 
 Servo steering;
 Servo chassis;
-Encoder enc(2, 3);
+Encoder enc(4, 5);
 
-int steering_Pin = 0;
-int driving_Pin = 1;
+int steering_Pin = 2;
+int driving_Pin = 3;
 
 int start_pin = A1;
 int task_3 = A2;
@@ -37,7 +37,7 @@ int inches_traveled = 0;
 int revolution_inch = 36;
 int revolution_tick = 1100;
 int inch_tick = 30;
-int meter_tick = 800;
+int meter_tick = 80;
 
 // Distance Sensors
 int front_dist = A0;
@@ -68,7 +68,7 @@ void task_one() {
   if(STEP == 1){
     if(encoder_tick < meter_tick*3){
       Serial.print("[STEP ONE] Meters Traveled : ");
-      Serial.print(encoder_tick / meter_tick);
+      Serial.print(encoder_tick);
       Serial.println(" ");
       drive(0.15);
     } else {
@@ -83,7 +83,7 @@ void task_one() {
   }
   
   if(STEP == 3){
-    if(encoder_tick < meter_tick*1.1){
+    if(encoder_tick < meter_tick*2){
       steering.write(RIGHT);
       Serial.print("[STEP THREE] Meters Traveled : ");
       Serial.print(encoder_tick / meter_tick);
@@ -176,6 +176,7 @@ void setup() {
 
 void loop() { 
   update_interfaces();
+//  task_two();
   int task_one_raw = analogRead(task_1);
   int task_two_raw = analogRead(task_2);
   int task_three_raw = analogRead(task_3);
@@ -196,9 +197,11 @@ void loop() {
     if (task_threeV > 3){
       Serial.println("Task 3 Selected");
     }  
-  } else {
+  } else if(startV < 3) {
     drive(0.0);
     steering.write(HOME);
+    enc.write(0);
+    encoder_tick = 0;
   }
 }
 
