@@ -5,14 +5,15 @@
 
 Servo steering;
 Servo chassis;
-Encoder enc(4, 5);
+Encoder enc(2, 3);
 
-int steering_Pin = 1;
-int driving_Pin = 3;
+int steering_Pin = 0;
+int driving_Pin = 1;
 
-int task_3 = A1;
-int task_2 = A2;
-int task_1 = A3;
+int start_pin = A1;
+int task_3 = A2;
+int task_2 = A3;
+int task_1 = A4;
 
 // Steering Positions
 double LEFT = 55;
@@ -175,10 +176,10 @@ void setup() {
 
 void loop() { 
   update_interfaces();
-  int task_one_raw = analogRead(A3);
-  int task_two_raw = analogRead(A2);
-  int task_three_raw = analogRead(A1);
-  int start_raw = analogRead(A5);
+  int task_one_raw = analogRead(task_1);
+  int task_two_raw = analogRead(task_2);
+  int task_three_raw = analogRead(task_3);
+  int start_raw = analogRead(start_pin);
 
   float task_oneV = task_one_raw * (5.0 / 1023.0);
   float task_twoV = task_two_raw * (5.0 / 1023.0);
